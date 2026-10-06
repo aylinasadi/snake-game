@@ -60,8 +60,8 @@ canvas {
 #startScreen .startCard {
     position: relative;
     z-index: 1;
-    width: min(350px, calc(100% - 40px));
-    padding: 45px 30px;
+    width: min(420px, calc(100% - 40px));
+    padding: 54px 36px;
     border: 4px solid #48e0d0;
     border-radius: 4px;
     background: #fff8e8;
@@ -70,7 +70,7 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 #gameOverScreen .gameOverCard {
@@ -90,11 +90,51 @@ canvas {
 }
 
 #startScreen h1 {
+    position: relative;
+    width: 100%;
     margin: 0;
-    padding: 0;
-    color: #e85d3f;
-    font-size: 4rem;
-    text-shadow: 4px 4px 0 #17344d;
+    padding: 14px 12px 16px;
+    border: 3px solid #ef8f3d;
+    border-radius: 3px;
+    background: #17344d;
+    color: #ffb74d;
+    font-size: 4.2rem;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.08em;
+    text-shadow: 2px 2px 0 #5c1f1e, 0 0 8px rgba(239, 143, 61, 0.5);
+    box-shadow: inset 0 0 0 2px #48e0d0, 0 0 10px rgba(239, 143, 61, 0.4);
+}
+
+#startScreen h1 .titleWord {
+    display: inline-block;
+}
+
+#startScreen h1 .titleWord > span {
+    display: inline-block;
+    color: #ffb74d; 
+    text-shadow: 0 0 4px #ffb36b, 0 0 10px rgba(210, 127, 53, 0.6), 2px 2px 0 #230c0c;
+    animation: letterFlicker 4s steps(1, end) infinite;
+}
+
+#startScreen h1 .titleWord > span:nth-child(2n) {
+    animation-delay: 0.25s;
+}
+
+#startScreen h1 .titleWord > span:nth-child(3n) {
+    animation-delay: 0.8s;
+}
+
+@keyframes letterFlicker {
+    0%, 92%, 96%, 100% {
+        opacity: 1;
+    }
+    94%, 98% {
+        opacity: 0.85;
+    }
 }
 
 #gameOverScreen h1 {
@@ -106,17 +146,17 @@ canvas {
 }
 
 #startScreen #author {
-    margin: 0 0 80px;
+    margin: 0 0 96px;
     color: #17344d;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 #startScreen p {
     margin: 0;
     color: #3d5363;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.96rem;
 }
 
 #gameOverScreen p {
@@ -130,15 +170,48 @@ canvas {
     margin: 0;
 }
 
+#difficultyOptions {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    gap: 7px;
+}
+
+#difficultyOptions button {
+    flex: 1;
+    padding: 11px 7px;
+    border: 2px solid #48e0d0;
+    border-radius: 2px;
+    background: #17344d;
+    color: #f7f2df;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#difficultyOptions button:hover {
+    background: #245777;
+    color: #48e0d0;
+}
+
+#difficultyOptions button.selected {
+    border-color: #ef8f3d;
+    background: #ef8f3d;
+    color: #17344d;
+    box-shadow: 3px 3px 0 #17344d;
+}
+
 #startButton {
-    margin-top: 20px;
-    padding: 13px 30px;
+    margin-top: 24px;
+    padding: 16px 36px;
     border: 3px solid #17344d;
     border-radius: 3px;
     background: #ef8f3d;
     color: #17344d;
     font: inherit;
-    font-size: 1.1rem;
+    font-size: 1.32rem;
     font-weight: bold;
     cursor: pointer;
 }
