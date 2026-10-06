@@ -18,6 +18,14 @@
         </div>
     </div>
 
+    <div id="gameOverScreen">
+        <div class="gameOverCard">
+            <h1>Game Over!</h1>
+            <p id="finalScore">Score: 0</p>
+            <button id="playAgainButton">Play Again</button>
+        </div>
+    </div>
+
     <h1 id="scoreDisplay">Score: 0</h1>
     <canvas id="gameCanvas" width="400"
             height="400"></canvas>
@@ -32,6 +40,9 @@
 
         const startScreen = document.getElementById("startScreen");
         const startButton = document.getElementById("startButton");
+        const gameOverScreen = document.getElementById("gameOverScreen");
+        const playAgainButton = document.getElementById("playAgainButton");
+        const finalScore = document.getElementById("finalScore");
         const scoreDisplay = document.getElementById("scoreDisplay");
 
         // ===== INITIAL STATE =====
@@ -56,7 +67,12 @@
                 gridSize, gridSize
             );
 
-            ctx.fillStyle = "black";
+            const hue = (Date.now() / 50) % 360;
+
+            ctx.fillStyle = `hsl(${hue}, 100%, 64%)`;
+            ctx.shadowColor = `hsl(${hue}, 100%, 64%)`;
+            ctx.shadowBlur = 18;
+
             for (const segment of snake) {
                 ctx.fillRect(
                     segment.x * gridSize,
@@ -64,6 +80,7 @@
                     gridSize, gridSize
                 );
             }
+            ctx.shadowBlur = 0;
         };
 
         drawGame();
@@ -85,7 +102,7 @@
                 {
                     gameRunning = false;
                     clearInterval(gameLoop);
-                    alert("Game Over!");
+                    endGame();
                     return;
                 }
             
@@ -94,7 +111,7 @@
             if (hitBody) {
                 gameRunning = false;
                 clearInterval(gameLoop);
-                alert("Game Over!");
+                endGame();
                 return;
             }
             
@@ -117,10 +134,37 @@
 
         let gameLoop;
 
-        startButton.addEventListener("click", () => {
+        const endGame = () => {
+            gameRunning = false;
+            clearInterval(gameLoop);
+            finalScore.textContent = `Score: ${score}`;
+            gameOverScreen.style.display = "flex";
+        };
+
+        const startGame = () => {
             startScreen.style.display = "none";
-            startButton.disabled = true;
+            gameOverScreen.style.display = "none";
+            gameRunning = true;
             gameLoop = setInterval(moveSnake, 200);
+        };
+
+        startButton.addEventListener("click", () => {
+            startButton.disabled = true;
+            startGame();
+        });
+
+        playAgainButton.addEventListener("click", () => {
+            snake = [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ];
+            direction = { x: 1, y: 0 };
+            food = { x: 15, y: 15 };
+            score = 0;
+            scoreDisplay.textContent = "Score: 0";
+            drawGame();
+            startGame();
         });
 
         // Keyboard controls
