@@ -14,6 +14,11 @@
             <h1>Snake Game</h1>
             <p id="author">Created by Aylin Asadi</p>
             <p id="instructions">Use arrow keys or WASD to control the snake</p>
+            <div id="difficultyOptions">
+                <button data-difficulty="easy">Easy</button>
+                <button data-difficulty="normal" class="selected">Normal</button>
+                <button data-difficulty="hard">Hard</button>
+            </div>
             <button id="startButton">Start Game</button>
         </div>
     </div>
@@ -120,6 +125,9 @@
             if (newHead.x === food.x && newHead.y === food.y) {
                 score++;
                 scoreDisplay.textContent = `Score: ${score}`;
+
+                clearInterval(gameLoop);
+                gameLoop = setInterval(moveSnake, getSpeed());
                 
                 food = {
                     x: Math.floor(Math.random() * tileCount),
@@ -133,6 +141,24 @@
         };
 
         let gameLoop;
+        let difficulty = "normal";
+
+        const getSpeed = () => {
+            let startingSpeed = 200;
+
+            if (difficulty === "easy") return 200;
+
+            if (difficulty === "normal") {
+                startingSpeed = 200;
+            } 
+
+            if (difficulty === "hard") {
+                startingSpeed = 120;
+            }
+            
+            return Math.max(60, startingSpeed - score * 10);
+        };
+
 
         const endGame = () => {
             gameRunning = false;
@@ -145,8 +171,19 @@
             startScreen.style.display = "none";
             gameOverScreen.style.display = "none";
             gameRunning = true;
-            gameLoop = setInterval(moveSnake, 200);
+            gameLoop = setInterval(moveSnake, getSpeed());
         };
+
+        const difficultyOptions = document.querySelectorAll("#difficultyOptions button");
+
+        difficultyOptions.forEach(button => {
+            button.addEventListener("click", () => {
+                difficulty = button.dataset.difficulty;
+
+                difficultyOptions.forEach((option) => option.classList.remove("selected"));
+                button.classList.add("selected");
+            });
+        });
 
         startButton.addEventListener("click", () => {
             startButton.disabled = true;
@@ -154,17 +191,10 @@
         });
 
         playAgainButton.addEventListener("click", () => {
-            snake = [
-                { x: 10, y: 10 },
-                { x: 9, y: 10 },
-                { x: 8, y: 10 }
-            ];
-            direction = { x: 1, y: 0 };
-            food = { x: 15, y: 15 };
-            score = 0;
-            scoreDisplay.textContent = "Score: 0";
-            drawGame();
-            startGame();
+            clearInterval(gameLoop);
+            gameOverScreen.style.display = "none";
+            startScreen.style.display = "flex";
+            startButton.disabled = false;
         });
 
         // Keyboard controls
