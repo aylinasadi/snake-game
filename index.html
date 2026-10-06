@@ -60,8 +60,7 @@
 
         drawGame();
 
-        // Step 1: Movement (game loop)
-        // Step 3: Eating and growing
+        // Movement (game loop), Eating and growing, Game over
         const moveSnake = () => {
 
             const head = snake[0];
@@ -69,6 +68,13 @@
                 x: head.x + direction.x,
                 y: head.y + direction.y
             };
+
+            if (newHead.x < 0 || newHead.x >= tileCount ||
+                newHead.y < 0 || newHead.y >= tileCount)
+                {
+                    alert("Game Over!");
+                    return;
+                }
 
             snake.unshift(newHead);
 
@@ -88,7 +94,7 @@
 
         setInterval(moveSnake, 200);
 
-        // Step 2: Keyboard controls (arrow keys)
+        // Keyboard controls
         document.addEventListener("keydown", (event) => {
             const key = event.key.toLocaleLowerCase();
 
@@ -103,7 +109,6 @@
             }
         });
 
-        // Step 4: Game over
         // Step 5: Improvements
         //
         // ===================================
