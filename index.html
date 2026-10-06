@@ -78,6 +78,19 @@
         setInterval(moveSnake, 200);
 
         // Step 2: Keyboard controls (arrow keys)
+        document.addEventListener("keydown", (event) => {
+            const key = event.key.toLocaleLowerCase();
+
+            if (key === "arrowup" || key === "w") {
+                direction = { x: 0, y: -1 };
+            } else if (key === "arrowdown" || key === "s") {
+                direction = { x: 0, y: 1 };
+            } else if (key === "arrowleft" || key === "a") {
+                direction = { x: -1, y: 0 };
+            } else if (key === "arrowright" || key === "d") {
+                direction = { x: 1, y: 0 };
+            }
+        });
         // Step 3: Eating and growing
         // Step 4: Game over
         // Step 5: Improvements
