@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <h1>Snake</h1>
+    <h1 id="scoreDisplay">Score: 0</h1>
     <canvas id="gameCanvas" width="400"
             height="400"></canvas>
     <p id="info"></p>
@@ -32,6 +32,7 @@
 
         const startScreen = document.getElementById("startScreen");
         const startButton = document.getElementById("startButton");
+        const scoreDisplay = document.getElementById("scoreDisplay");
 
         // ===== INITIAL STATE =====
         let snake = [
@@ -101,6 +102,7 @@
 
             if (newHead.x === food.x && newHead.y === food.y) {
                 score++;
+                scoreDisplay.textContent = `Score: ${score}`;
                 
                 food = {
                     x: Math.floor(Math.random() * tileCount),
