@@ -80,7 +80,16 @@
                     alert("Game Over!");
                     return;
                 }
+            
+            const hitBody = snake.some(segment => segment.x === newHead.x && segment.y === newHead.y);
 
+            if (hitBody) {
+                gameRunning = false;
+                clearInterval(gameLoop);
+                alert("Game Over!");
+                return;
+            }
+            
             snake.unshift(newHead);
 
             if (newHead.x === food.x && newHead.y === food.y) {
