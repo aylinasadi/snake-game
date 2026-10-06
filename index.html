@@ -60,8 +60,11 @@
 
         drawGame();
 
+        let gameRunning = true;
+
         // Movement (game loop), Eating and growing, Game over
         const moveSnake = () => {
+            if (!gameRunning) return;
 
             const head = snake[0];
             const newHead = {
@@ -72,6 +75,8 @@
             if (newHead.x < 0 || newHead.x >= tileCount ||
                 newHead.y < 0 || newHead.y >= tileCount)
                 {
+                    gameRunning = false;
+                    clearInterval(gameLoop);
                     alert("Game Over!");
                     return;
                 }
@@ -92,7 +97,7 @@
             drawGame();
         };
 
-        setInterval(moveSnake, 200);
+        const gameLoop = setInterval(moveSnake, 200);
 
         // Keyboard controls
         document.addEventListener("keydown", (event) => {
